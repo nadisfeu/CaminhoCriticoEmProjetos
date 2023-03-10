@@ -50,7 +50,7 @@ class WeightedGraph:
                     if dist[v] > dist[u] + w:
                         dist[v] = dist[u] + w
                         pred[v] = u
-        return (dist, pred)
+        return dist, pred
 
     def bellman_ford_improved(self, s):
         dist = [float("inf")] * self.node_count
@@ -66,9 +66,9 @@ class WeightedGraph:
                         swapped = True
             if not swapped:
                 break
-        return (dist, pred)
+        return dist, pred
 
-    def min_dist_Q(self, Q, dist):
+    def min_dist_q(self, Q, dist):
         min_dist = float("inf")
         min_node = -1
         for node in Q:
@@ -76,7 +76,6 @@ class WeightedGraph:
                 min_dist = dist[node]
                 min_node = node
         return min_node
-
 
     def dijkstra(self, s):
         dist = [float("inf")] * self.node_count
@@ -90,8 +89,7 @@ class WeightedGraph:
                 if dist[v] > dist[u] + w:
                     dist[v] = dist[u] + w
                     pred[v] = u
-        return (dist, pred)
-
+        return dist, pred
 
     def dijkstra_pq(self, s):
         dist = [float("inf")] * self.node_count
