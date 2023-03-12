@@ -29,14 +29,11 @@ class Functions:
             if self.table["Dependências"][c] == 'NaN':
                 self.graph.add_directed_edge(0, c+1, 0)
                 
-    def critical(self, path_critical):
+    def critical(self, path_critical: list):
+        path_critical.remove(0)
         tempo = 0
-        for i in range(len(path_critical)-1):
-            print('- ', self.table['Nome'][i])
+        for i in path_critical:
+            print('- ', self.table['Nome'][i - 1])
             tempo = tempo+1
 
         print("Tempo Mínimo: ", tempo)
-    
-
-    
-
