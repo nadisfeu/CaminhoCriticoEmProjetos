@@ -18,10 +18,13 @@ class Functions:
         self.table["Dependências"] = self.table["Dependências"].fillna('NaN')
         # le o codigo por matéria
         for c in range(len(self.table["Código"])):
-            cod = self.table["Código"][c]  # olha a linha c e o codigo dela
-            dep = self.table[self.table["Dependências"].str.contains(cod)]  # procura se alguma das materias tem dep
+            # olha a linha c e o codigo dela
+            cod = self.table["Código"][c]
+            # procura se alguma das materias tem dep
+            dep = self.table[self.table["Dependências"].str.contains(cod)]
             for i in dep.index:
-                self.graph.add_directed_edge(c + 1, i+1, 1)  # cria a aresta no grafo com o peso 1
+                # cria a aresta no grafo com o peso 1
+                self.graph.add_directed_edge(c + 1, i+1, 1)
             self.graph.add_directed_edge(c + 1, self.graph.node_count - 1, 1)
             if self.table["Dependências"][c] == 'NaN':
                 self.graph.add_directed_edge(0, c+1, 0)
