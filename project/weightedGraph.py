@@ -132,7 +132,17 @@ class WeightedGraph:
                     dist[v] = dist[u] - w
                     pred[v] = u
         return dist, pred
-
+    
+    #Percorre o vetor pred a partir do nó com valor -1 (que representa o nó mais distante do nó de origem) e seguir em direção ao nó de origem.
+    def get_critical_path(self, pred, dest):
+        path = []
+        node = dest
+        while node != -1:
+            path.append(node)
+            node = pred[node]
+        path.reverse()
+        return path
+    
     
     
 
