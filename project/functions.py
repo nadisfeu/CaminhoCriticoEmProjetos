@@ -14,12 +14,14 @@ class Functions:
     # ideia para montar o grafo: le o codigo da linha e depois procura na coluna de dependencias
     # se algum depende dele e faz a conexão
     def make_weightedgraph(self):
+        # corrige os vazios para funcionar a indexação
+        self.table["Dependências"] = self.table["Dependências"].fillna('NaN')
         # le o codigo por matéria
         for c in range(len(self.table["Código"])):
             cod = self.table["Código"][c]  # olha a linha c e o codigo dela
-            dep = self.table.loc[self.table["Dependências"] == cod]  # procura se alguma das materias tem dep
+            dep = self.table[self.table["Dependências"].str.contains(cod)]  # procura se alguma das materias tem dep
             for i in dep.index:
                 self.graph.add_directed_edge(c + 1, i+1, 1)  # cria a aresta no grafo com o peso 1
             self.graph.add_directed_edge(c + 1, self.graph.node_count - 1, 1)
-            if pd.isna(self.table["Dependências"][c]):
+            if self.table["Dependências"][c] == 'NaN':
                 self.graph.add_directed_edge(0, c+1, 0)
