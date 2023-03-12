@@ -76,6 +76,7 @@ class WeightedGraph:
                 min_dist = dist[node]
                 min_node = node
         return min_node
+    
 
     def dijkstra(self, s):
         dist = [float("inf")] * self.node_count
@@ -106,3 +107,32 @@ class WeightedGraph:
                     pred[v] = u
                     heapq.heappush(pq, [dist[v], v])
         return dist, pred
+
+
+    def max_dist_q(self, Q, dist):
+        max_dist = -float("inf")
+        max_node = -1
+        for node in Q:
+            if dist[node] > max_dist:
+                max_dist = dist[node]
+                max_node = node
+        return max_node
+    
+
+    def dijkstra_max(self, s):
+        dist = [-float("inf")] * self.node_count
+        pred = [-1] * self.node_count
+        dist[s] = 0
+        Q = [i for i in range(self.node_count)]
+        while Q != []:
+            u = self.max_dist_q(Q, dist)
+            Q.remove(u)
+            for (v, w) in self.adj_list[u]:
+                if dist[v] < dist[u] - w:
+                    dist[v] = dist[u] - w
+                    pred[v] = u
+        return dist, pred
+
+    
+    
+
