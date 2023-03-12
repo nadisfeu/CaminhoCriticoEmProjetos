@@ -5,7 +5,7 @@ import pandas as pd
 class Functions:
     def __init__(self, file_path: str):
         self.table = pd.read_csv(file_path)
-        self.graph = WeightedGraph(len(self.table["Código"]))
+        self.graph = WeightedGraph(len(self.table["Código"]) + 2)
         self.make_weightedgraph()
 
     def print_table(self):
@@ -19,4 +19,7 @@ class Functions:
             cod = self.table["Código"][c]  # olha a linha c e o codigo dela
             dep = self.table.loc[self.table["Dependências"] == cod]  # procura se alguma das materias tem dep
             for i in dep.index:
-                self.graph.add_directed_edge(c, i, 1)  # cria a aresta no grafo com o peso 1
+                self.graph.add_directed_edge(c + 1, i+1, 1)  # cria a aresta no grafo com o peso 1
+            self.graph.add_directed_edge(c + 1, self.graph.node_count - 1, 1)
+            if pd.isna(self.table["Dependências"][c]):
+                self.graph.add_directed_edge(0, c+1, 0)
