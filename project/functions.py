@@ -33,7 +33,7 @@ class Functions:
         path_critical.remove(0)
         tempo = 0
         for i in path_critical:
-            print('- ', self.table['Nome'][i - 1])
+            print('- ', self.table['Nome'][i-1])
             tempo = tempo+1
 
         print("Tempo Mínimo: ", tempo)

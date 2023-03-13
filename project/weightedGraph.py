@@ -108,7 +108,6 @@ class WeightedGraph:
                     heapq.heappush(pq, [dist[v], v])
         return dist, pred
 
-
     def max_dist_q(self, Q, dist):
         max_dist = -float("inf")
         max_node = -1
@@ -118,8 +117,7 @@ class WeightedGraph:
                 max_node = node
         return max_node
     
-
-    def dijkstra_max(self, s):
+    def dijkstra_max(self, s, dest):
         dist = [-float("inf")] * self.node_count
         pred = [-1] * self.node_count
         dist[s] = 0
@@ -128,12 +126,12 @@ class WeightedGraph:
             u = self.max_dist_q(Q, dist)
             Q.remove(u)
             for (v, w) in self.adj_list[u]:
-                if dist[v] < dist[u] - w:
-                    dist[v] = dist[u] - w
+                if dist[v] < dist[u] + w:
+                    dist[v] = dist[u] + w
                     pred[v] = u
-        return dist, pred
-    
-    #Percorre o vetor pred a partir do nó com valor -1 (que representa o nó mais distante do nó de origem) e seguir em direção ao nó de origem.
+        crit_path = self.get_critical_path(pred, dest)
+        return crit_path
+
     def get_critical_path(self, pred, dest):
         path = []
         node = dest
@@ -142,6 +140,9 @@ class WeightedGraph:
             node = pred[node]
         path.reverse()
         return path
+
+    
+
     
     
     
