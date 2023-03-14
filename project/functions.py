@@ -5,7 +5,7 @@ import pandas as pd
 class Functions:
     def __init__(self, file_path: str):
         self.table = pd.read_csv(file_path)
-        self.graph = WeightedGraph(len(self.table["Código"]) + 2)
+        self.graph = WeightedGraph(len(self.table["Código"]) + 2, adj_list=[])
         self.make_weightedgraph()
 
     def print_table(self):
@@ -31,6 +31,7 @@ class Functions:
                 
     def critical(self, path_critical: list):
         path_critical.remove(0)
+        path_critical.remove(self.graph.node_count - 1)
         tempo = 0
         for i in path_critical:
             print('- ', self.table['Nome'][i-1])
